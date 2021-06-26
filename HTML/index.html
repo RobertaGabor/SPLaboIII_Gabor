@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="./../JS/Vehiculo.js"></script>
+    <script type="text/javascript" src="./../JS/Auto.js"></script>
+    <script type="text/javascript" src="./../JS/Camioneta.js"></script>
+    <script type="text/javascript" src="./../JS/Manejador.js"></script>
+    <link rel="stylesheet" type="text/css" href="./../CSS/estilo.css"/>
+    <title>Document</title>
+</head>
+<body>        
+    <div id="espacioAlta">
+        <input type="button" value="Alta" id="altaV">
+    </div>
+    <div class="contain">
+        <div class="grilla" id="grilla" hidden>
+            <label for="marca">Marca: </label>
+            <input type="text" name="marca" id="InMa"><br><br/>
+            <label for="marca">Modelo: </label>
+            <input type="text" name="modelo" id="InMo"><br><br/>
+            <label for="marca">Precio: </label>
+            <input type="text" name="precio" id="InP"><br><br/>
+            <label for="tipo">Tipo: </label>
+            <select name="tipos" id="InT">
+                <option value="Auto" id="car">Auto</option>
+                <option value="Camioneta" id="truck">Camioneta</option>
+            </select>
+            <br><br/>
+            <div id="AuxiliarAuto" >
+                <label for="marca">Cantidad de ruedas: </label>
+                <input type="text" name="ruedas" id="InR"><br><br/>               
+            </div>
+            <div id="AuxiliarCamioneta" hidden>
+                <label for="cuatro" >Es 4x4?: </label>
+                <select name="cuatro" id="es4x4">
+                    <option value="si">si</option>
+                    <option value="no">no</option>
+                </select><br><br/>
+            </div>
+            <input type="button" value="Cerrar" id="closed" style="margin-left: 5px;">
+            <input type="button" value="Agregar" id="Adding" style="margin-left: 5px;">
+        </div>
+    </div>
+
+    <div>
+        <H1>FILTROS</H1>
+    </div>
+    <div id="Filtracion">
+        <label for="filtrado" style="margin-left: 50px;">Filtrar por:</label> 
+        <select name="filtrado" id="filtros">
+            <option value="Auto">Auto</option>
+            <option value="Camioneta">Camioneta</option>
+        </select>
+        <label for="promedio" style="margin-left: 200px;">Promedio de precios:</label>
+        <input type="text" name="promedios" id="promedio" disabled="disabled">
+        <input type="button" value="Calcular promedio" id="calcP">
+    </div>
+    <div id="Mostrar">
+        <h2 style="display: inline-block;">Campos mostrados</h2> <h3 style="display:inline-block;">Tildar los campos a mostrar</h3><br><br/>
+        <label for="">ID</label>
+        <input type="checkbox" name="atributos" id="idV" value="Id"><label for="">Marca</label><input type="checkbox" name="atributos" id="marcaV" value="Marca"> 
+        <label for="">Modelo</label><input type="checkbox" name="atributos" id="modeloV" value="Modelo"><label for="">Precio</label> <input type="checkbox" name="atributos" id="precioV" value="Precio"> 
+    </div>
+    <div id="tTable">
+        <h1>LISTA DE VEHICULOS</h1>
+        <tbody id="tcuerpo">
+
+        </tbody>
+    </div>
+</body>
+</html>
