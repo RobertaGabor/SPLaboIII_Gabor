@@ -17,12 +17,15 @@ var __extends = (this && this.__extends) || (function () {
 var Auto = /** @class */ (function (_super) {
     __extends(Auto, _super);
     function Auto(id, marca, modelo, precio, puertas) {
-        var _this = _super.call(this, id, marca, modelo, precio) || this;
-        _this.cantPuertas = puertas;
-        return _this;
+        return _super.call(this, id, marca, modelo, precio, puertas) || this;
     }
     Auto.AutoToString = function (car) {
         return "{" + Vehiculo.VehiculoToString(car) + ',"cantPuertas"' + ":" + '"' + car.cantPuertas + '"' + "}";
+    };
+    Auto.AgregarAuto = function (id, marca, modelo, precio, puertas) {
+        var car = new Auto(id, marca.value, modelo.value, Number(precio.value), puertas.value + " puertas");
+        Vehiculo.cargarVehiculos(car);
+        alert("Auto agregado con exito!");
     };
     return Auto;
 }(Vehiculo));

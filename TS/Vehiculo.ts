@@ -4,23 +4,26 @@ class Vehiculo
     marca:string;
     modelo:string;
     precio:number;
+    caracteristica:string;
 
-    constructor(id:number,marca:string,modelo:string,precio:number)
+    constructor(id:number,marca:string,modelo:string,precio:number,caracteristica:string)
     {
         this.id=id;
         this.marca=marca;
         this.modelo=modelo;
         this.precio=precio;
+        this.caracteristica=caracteristica;
     }
     static VehiculoToString(car:Vehiculo)
     {
         return '"id"' +":"+ '"'+car.id + '"'+ ',"marca"'+":" + '"'+car.marca + '"'+',"modelo"'+":" + '"'+car.modelo + '"' +',"precio"'+":" + '"'+car.precio + '"';
     }
 
-    public static Mostrar(id:number,marca:string,modelo:string,precio:number,cuatro?:boolean,ruedas?:number):void{
-        var cuerpo:HTMLElement=Manejador.$("tcuerpo");
+    public static Mostrar(id:number,marca:string,modelo:string,precio:number,caracteristica:string):void{
+        
+        var cuerpo:HTMLElement|null=Manejador.$("tcuerpo");
         var row= document.createElement("tr");
-        cuerpo.appendChild(row);
+        cuerpo?.appendChild(row);
   
         var tdId=document.createElement("td");
         row.appendChild(tdId);
@@ -41,38 +44,13 @@ class Vehiculo
 
         var tdprecio=document.createElement("td");
         row.appendChild(tdprecio);
-        var textoCarnet=document.createTextNode(String(precio));
+        var textoPre=document.createTextNode(String(precio));
+        tdprecio.appendChild(textoPre);
 
-
-        var tdcuatro=document.createElement("td");
-        row.appendChild(tdcuatro);
-        if(ruedas!=undefined)
-        {
-
-            var textocuatro=document.createTextNode(String(cuatro));
-                    
-        }
-        else
-        {
-            var textocuatro=document.createTextNode(String(false));
-        }
-
-        tdcuatro.appendChild(textocuatro); 
-        
-        var tdRuedas=document.createElement("td");
-        row.appendChild(tdRuedas);
-        if(ruedas!=undefined)
-        {
-
-            var textoRuedas=document.createTextNode(String(ruedas));
-                    
-        }
-        else
-        {
-            var textoRuedas=document.createTextNode(String(0));
-        }
-
-        tdRuedas.appendChild(textoRuedas);   
+        var tdcar=document.createElement("td");
+        row.appendChild(tdcar);
+        var textocar=document.createTextNode(caracteristica);
+        tdcar.appendChild(textocar); 
         
         
         var tdBorrar=document.createElement("td");
@@ -84,19 +62,55 @@ class Vehiculo
         var textoBorrar=document.createTextNode("ELIMINAR");
         ancla.appendChild(textoBorrar);
         
-        ancla.addEventListener("click",Vehiculo.EliminarVehiculo)
+       // ancla.addEventListener("click",Vehiculo.EliminarVehiculo)
     }
-
-    public static EliminarVehiculo(ev:Event)
+    public static cargarVehiculos(ve:Vehiculo)
     {
-        var btn=ev.target; 
-        // Manejador.$("tcuerpo").removeChild(btn.parentNode.parentNode);
-        alert("es eliminao");
-        
-        var dni:string=((<HTMLElement>(<HTMLElement>(<HTMLElement>btn).parentElement).parentElement).querySelector(".PRIMARY"))?.innerHTML);
-        Manejador.eliminarCiudadanos(dni);
-        
+        //load
+        var lista:Array<Vehiculo>;
+        lista=[]; //INICIALIZAR
+
+        if(localStorage.length>0)
+        {
+            lista=JSON.parse(localStorage.getItem("Vehiculos"));
+        }
+
+        if(ve!=undefined)
+        {
+            
+            lista.push(ve);
+            Vehiculo.limpiarTabla();
+            //limpiar tabla
+        }
+
+        localStorage.setItem("Vehiculos",JSON.stringify(lista)); 
+
+        for(var i=0;i<lista.length;i++)
+        {
+
+            Vehiculo.Mostrar(lista[i].id,lista[i].marca,lista[i].modelo,lista[i].precio,lista[i].caracteristica)
+        }
+
+        //load
     }
+    // public static EliminarVehiculo(ev:Event)
+    // {
+    //     var btn=ev.target; 
+    //     // Manejador.$("tcuerpo").removeChild(btn.parentNode.parentNode);
+    //     alert("es eliminao");
+
+    //     var dni:string=((<HTMLElement>(<HTMLElement>(<HTMLElement>btn).parentElement).parentElement).querySelector(".PRIMARY"))?.innerHTML;
+        
+        
+    //     var btn=Manejador.$("InT");
+    //     var nombre=btn.options[btn.selectedIndex].text;
+    //     if(nombre=="Auto")
+    //     {
+            
+    //     }
+        
+    // }
+
     public static limpiarTabla()
     {
         var elmtTable = document.getElementById('tcuerpo');

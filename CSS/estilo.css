@@ -41,3 +41,13 @@ h1
     width: 100%;
     
 }
+th,td
+{
+    border: 1px solid black;
+    padding: 4px;  
+}
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+}

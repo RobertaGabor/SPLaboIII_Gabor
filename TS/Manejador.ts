@@ -3,57 +3,44 @@ class Manejador implements EventListenerObject
     //id autoincremental
     
 
-
-
     public handleEvent(ev:Event):void
     {
-        var mar=Manejador.$("InMa");
-        var mod=Manejador.$("InMo");
-        var pre=Manejador.$("InP");
-        var cuatro=Manejador.$("es4x4");
 
+        var mar:HTMLInputElement=Manejador.$("InMa");
+        var mod:HTMLInputElement=Manejador.$("InMo");
+        var pre:HTMLInputElement=Manejador.$("InP");
+        var tipo:HTMLInputElement=Manejador.$("InT");       
         let bton:HTMLElement=<HTMLElement>ev.target
-        if(bton.id=="altaV")
+        var cuadro:HTMLElement=Manejador.$("grilla");
+        switch(bton.id)
         {
-            var cuadro:HTMLElement=Manejador.$("grilla");
-            cuadro.hidden=false;
+            case "altaV":
+                cuadro.hidden=false;
+                tipo.addEventListener("change",Manejador.mostrarAdicional);
+               
+                break;
+            case "closed":
+                cuadro.hidden=true;
+                break;
+            case "Adding":
+                
+                if(tipo.options[tipo.selectedIndex].text=="Auto")
+                {
+                    var puertas:HTMLInputElement;
+                    puertas=Manejador.$("InR");
+                    Auto.AgregarAuto(1,mar,mod,pre,puertas)
+                }
+                else
+                {
+                    var cuatro:HTMLInputElement;
+                    cuatro=Manejador.$("es4x4");
+                    Camioneta.AgregarCamioneta(1,mar,mod,pre,cuatro)
+                }
+                //Manejador.CrearVehiculo
+                break;
+            case "calcP":
+                break;
 
-            var closed:HTMLElement=Manejador.$("closed");
-           closed?.onclick=function(){
-            cuadro.hidden=true;}
-            
-            var btnVehiculo:HTMLElement = Manejador.$("InT");
-            btnVehiculo.addEventListener("change",Manejador.mostrarAdicional);
-            
-            var adding:HTMLElement=Manejador.$("Adding");
-            adding.addEventListener("click",Manejador.CrearVehiculo)
-            //closed?.onclick=
-           
-        }
-        else
-        {
-            if(bton.id=="calcP")
-            {
-
-            }
-            else
-            {
-
-            }
-        }
-    }
-
-    public static CrearVehiculo(marca:string,modelo:string,precio:number,cuatro:boolean)
-    {
-        var btn=Manejador.$("InT");
-        var nombre=btn.options[btn.selectedIndex].text;
-        if(nombre=="Camioneta")
-        {
-            Camioneta.AgregarCamioneta(marca,modelo,precio,cuatro);
-        }
-        else
-        {
-            
         }
     }
     public static mostrarAdicional(ev:Event)
@@ -64,15 +51,17 @@ class Manejador implements EventListenerObject
         var camioneta:HTMLElement=Manejador.$("AuxiliarCamioneta");
         if(nombre=="Auto")
         {
-            camioneta?.hidden=true; 
-            auto?.hidden=false;
+            camioneta.hidden=true; 
+            auto.hidden=false;
         }
         else
         {
-            auto?.hidden=true;
-            camioneta?.hidden=false;          
+            auto.hidden=true;
+            camioneta.hidden=false;          
         }
     }
+
+
     public static $(ide:string):HTMLElement|null
     {
         return document.getElementById(ide);
@@ -83,6 +72,7 @@ class Manejador implements EventListenerObject
 
 window.addEventListener("load",()=>
 {
+    
     //localStorage.clear();
 
     let stage:EventListenerObject= new Manejador();
@@ -92,6 +82,14 @@ window.addEventListener("load",()=>
 
     let btnPromedio = <HTMLElement>document.getElementById("calcP");
     btnPromedio.addEventListener("click",stage);
+
+    
+    let btnAceptar = <HTMLElement>document.getElementById("Adding");
+    btnAceptar.addEventListener("click",stage);
+
+    
+    let btnCerrar = <HTMLElement>document.getElementById("closed");
+    btnCerrar.addEventListener("click",stage);
 
    
 });

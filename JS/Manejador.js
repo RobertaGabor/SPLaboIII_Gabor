@@ -7,35 +7,32 @@ var Manejador = /** @class */ (function () {
         var mar = Manejador.$("InMa");
         var mod = Manejador.$("InMo");
         var pre = Manejador.$("InP");
-        var cuatro = Manejador.$("es4x4");
+        var tipo = Manejador.$("InT");
         var bton = ev.target;
-        if (bton.id == "altaV") {
-            var cuadro = Manejador.$("grilla");
-            cuadro.hidden = false;
-            var closed = Manejador.$("closed");
-            closed === null || closed === void 0 ? void 0 : closed.onclick = function () {
+        var cuadro = Manejador.$("grilla");
+        switch (bton.id) {
+            case "altaV":
+                cuadro.hidden = false;
+                tipo.addEventListener("change", Manejador.mostrarAdicional);
+                break;
+            case "closed":
                 cuadro.hidden = true;
-            };
-            var btnVehiculo = Manejador.$("InT");
-            btnVehiculo.addEventListener("change", Manejador.mostrarAdicional);
-            var adding = Manejador.$("Adding");
-            adding.addEventListener("click", Manejador.CrearVehiculo);
-            //closed?.onclick=
-        }
-        else {
-            if (bton.id == "calcP") {
-            }
-            else {
-            }
-        }
-    };
-    Manejador.CrearVehiculo = function (marca, modelo, precio, cuatro) {
-        var btn = Manejador.$("InT");
-        var nombre = btn.options[btn.selectedIndex].text;
-        if (nombre == "Camioneta") {
-            Camioneta.AgregarCamioneta(marca, modelo, precio, cuatro);
-        }
-        else {
+                break;
+            case "Adding":
+                if (tipo.options[tipo.selectedIndex].text == "Auto") {
+                    var puertas;
+                    puertas = Manejador.$("InR");
+                    Auto.AgregarAuto(1, mar, mod, pre, puertas);
+                }
+                else {
+                    var cuatro;
+                    cuatro = Manejador.$("es4x4");
+                    Camioneta.AgregarCamioneta(1, mar, mod, pre, cuatro);
+                }
+                //Manejador.CrearVehiculo
+                break;
+            case "calcP":
+                break;
         }
     };
     Manejador.mostrarAdicional = function (ev) {
@@ -44,12 +41,12 @@ var Manejador = /** @class */ (function () {
         var auto = Manejador.$("AuxiliarAuto");
         var camioneta = Manejador.$("AuxiliarCamioneta");
         if (nombre == "Auto") {
-            camioneta === null || camioneta === void 0 ? void 0 : camioneta.hidden = true;
-            auto === null || auto === void 0 ? void 0 : auto.hidden = false;
+            camioneta.hidden = true;
+            auto.hidden = false;
         }
         else {
-            auto === null || auto === void 0 ? void 0 : auto.hidden = true;
-            camioneta === null || camioneta === void 0 ? void 0 : camioneta.hidden = false;
+            auto.hidden = true;
+            camioneta.hidden = false;
         }
     };
     Manejador.$ = function (ide) {
@@ -64,4 +61,8 @@ window.addEventListener("load", function () {
     btnADD.addEventListener("click", stage);
     var btnPromedio = document.getElementById("calcP");
     btnPromedio.addEventListener("click", stage);
+    var btnAceptar = document.getElementById("Adding");
+    btnAceptar.addEventListener("click", stage);
+    var btnCerrar = document.getElementById("closed");
+    btnCerrar.addEventListener("click", stage);
 });
