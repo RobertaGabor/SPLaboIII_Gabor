@@ -51,6 +51,7 @@
     <div id="Filtracion">
         <label for="filtrado" style="margin-left: 50px;">Filtrar por:</label> 
         <select name="filtrado" id="filtros">
+            <option value="Todos">Todos</option>
             <option value="Auto">Auto</option>
             <option value="Camioneta">Camioneta</option>
         </select>
@@ -61,14 +62,14 @@
     <div id="Mostrar">
         <h2 style="display: inline-block;">Campos mostrados</h2> <h3 style="display:inline-block;">Tildar los campos a mostrar</h3><br><br/>
         <label for="">ID</label>
-        <input type="checkbox" name="atributos" id="idV" value="Id"><label for="">Marca</label><input type="checkbox" name="atributos" id="marcaV" value="Marca"> 
-        <label for="">Modelo</label><input type="checkbox" name="atributos" id="modeloV" value="Modelo"><label for="">Precio</label> <input type="checkbox" name="atributos" id="precioV" value="Precio"> 
+        <input type="checkbox" name="atributos" id="idV" value="Id" checked><label for="">Marca</label><input type="checkbox" name="atributos" id="marcaV" value="Marca" checked> 
+        <label for="">Modelo</label><input type="checkbox" name="atributos" id="modeloV" value="Modelo" checked><label for="">Precio</label> <input type="checkbox" name="atributos" id="precioV" value="Precio" checked> 
     </div>
     <div id="tTable">
         <h1>LISTA DE VEHICULOS</h1>
-        <table>
+        <table id="mitabla">
             
-            <thead>
+            <thead id="tcabeza">
                 <th>ID</th>
                 <th>MARCA</th>
                 <th>MODELO</th>

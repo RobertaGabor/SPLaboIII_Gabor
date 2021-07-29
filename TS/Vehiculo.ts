@@ -62,7 +62,7 @@ class Vehiculo
         var textoBorrar=document.createTextNode("ELIMINAR");
         ancla.appendChild(textoBorrar);
         
-       // ancla.addEventListener("click",Vehiculo.EliminarVehiculo)
+        ancla.addEventListener("click",Vehiculo.EliminarVehiculo)
     }
     public static cargarVehiculos(ve:Vehiculo)
     {
@@ -90,14 +90,25 @@ class Vehiculo
 
             Vehiculo.Mostrar(lista[i].id,lista[i].marca,lista[i].modelo,lista[i].precio,lista[i].caracteristica)
         }
-
-        //load
     }
-    // public static EliminarVehiculo(ev:Event)
-    // {
-    //     var btn=ev.target; 
-    //     // Manejador.$("tcuerpo").removeChild(btn.parentNode.parentNode);
-    //     alert("es eliminao");
+     public static EliminarVehiculo(ev:Event)
+     {
+         var btn=ev.target;
+         var vehiculoE=btn.parentNode.parentNode; 
+         var lista:Array<Vehiculo>;
+
+         var idSelect:number;
+         //eliminarlo del localS
+         
+         idSelect=vehiculoE.querySelector(".PRIMARY").innerHTML;
+         lista=Vehiculo.traerLista();
+
+         lista=lista.filter(elemento => elemento.id != idSelect)
+         localStorage.clear();
+         localStorage.setItem("Vehiculos",JSON.stringify(lista)); 
+         
+         Manejador.$("tcuerpo").removeChild(vehiculoE);
+         alert("Se ha eliminado con exito!");
 
     //     var dni:string=((<HTMLElement>(<HTMLElement>(<HTMLElement>btn).parentElement).parentElement).querySelector(".PRIMARY"))?.innerHTML;
         
@@ -109,8 +120,34 @@ class Vehiculo
             
     //     }
         
-    // }
+     }
+    public static traerLista()
+    {
+        var lista:Array<Vehiculo>;
+        lista=[]; //INICIALIZAR
+        if(localStorage.length>0)
+        {
+            lista=JSON.parse(localStorage.getItem("Vehiculos"));
+        }
+        return lista;
+    }
+    public static cargarPagina(lista?:Array<Vehiculo>)
+    {
+        if (lista==undefined)
+        {
+            var lista:Array<Vehiculo>;
+            lista=[]; //INICIALIZAR  
+            if(localStorage.length>0)
+            {
+                lista=JSON.parse(localStorage.getItem("Vehiculos"));
+            }         
+        }
+        for(var i=0;i<lista.length;i++)
+        {
 
+            Vehiculo.Mostrar(lista[i].id,lista[i].marca,lista[i].modelo,lista[i].precio,lista[i].caracteristica)
+        }
+    }
     public static limpiarTabla()
     {
         var elmtTable = document.getElementById('tcuerpo');

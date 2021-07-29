@@ -43,7 +43,7 @@ var Vehiculo = /** @class */ (function () {
         ancla.setAttribute("href", "#");
         var textoBorrar = document.createTextNode("ELIMINAR");
         ancla.appendChild(textoBorrar);
-        // ancla.addEventListener("click",Vehiculo.EliminarVehiculo)
+        ancla.addEventListener("click", Vehiculo.EliminarVehiculo);
     };
     Vehiculo.cargarVehiculos = function (ve) {
         //load
@@ -61,20 +61,47 @@ var Vehiculo = /** @class */ (function () {
         for (var i = 0; i < lista.length; i++) {
             Vehiculo.Mostrar(lista[i].id, lista[i].marca, lista[i].modelo, lista[i].precio, lista[i].caracteristica);
         }
-        //load
     };
-    // public static EliminarVehiculo(ev:Event)
-    // {
-    //     var btn=ev.target; 
-    //     // Manejador.$("tcuerpo").removeChild(btn.parentNode.parentNode);
-    //     alert("es eliminao");
-    //     var dni:string=((<HTMLElement>(<HTMLElement>(<HTMLElement>btn).parentElement).parentElement).querySelector(".PRIMARY"))?.innerHTML;
-    //     var btn=Manejador.$("InT");
-    //     var nombre=btn.options[btn.selectedIndex].text;
-    //     if(nombre=="Auto")
-    //     {
-    //     }
-    // }
+    Vehiculo.EliminarVehiculo = function (ev) {
+        var btn = ev.target;
+        var vehiculoE = btn.parentNode.parentNode;
+        var lista;
+        var idSelect;
+        //eliminarlo del localS
+        idSelect = vehiculoE.querySelector(".PRIMARY").innerHTML;
+        lista = Vehiculo.traerLista();
+        lista = lista.filter(function (elemento) { return elemento.id != idSelect; });
+        localStorage.clear();
+        localStorage.setItem("Vehiculos", JSON.stringify(lista));
+        Manejador.$("tcuerpo").removeChild(vehiculoE);
+        alert("Se ha eliminado con exito!");
+        //     var dni:string=((<HTMLElement>(<HTMLElement>(<HTMLElement>btn).parentElement).parentElement).querySelector(".PRIMARY"))?.innerHTML;
+        //     var btn=Manejador.$("InT");
+        //     var nombre=btn.options[btn.selectedIndex].text;
+        //     if(nombre=="Auto")
+        //     {
+        //     }
+    };
+    Vehiculo.traerLista = function () {
+        var lista;
+        lista = []; //INICIALIZAR
+        if (localStorage.length > 0) {
+            lista = JSON.parse(localStorage.getItem("Vehiculos"));
+        }
+        return lista;
+    };
+    Vehiculo.cargarPagina = function (lista) {
+        if (lista == undefined) {
+            var lista;
+            lista = []; //INICIALIZAR  
+            if (localStorage.length > 0) {
+                lista = JSON.parse(localStorage.getItem("Vehiculos"));
+            }
+        }
+        for (var i = 0; i < lista.length; i++) {
+            Vehiculo.Mostrar(lista[i].id, lista[i].marca, lista[i].modelo, lista[i].precio, lista[i].caracteristica);
+        }
+    };
     Vehiculo.limpiarTabla = function () {
         var elmtTable = document.getElementById('tcuerpo');
         var tableRows = elmtTable.getElementsByTagName('tr');
